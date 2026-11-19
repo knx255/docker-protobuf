@@ -23,6 +23,7 @@ ARG PROTOC_GEN_DART_VERSION=v25.0.0
 ARG PROTOC_GEN_DOC_VERSION=v1.5.1
 # renovate: datasource=github-releases depName=protoc-gen-go-grpc packageName=grpc/grpc-go
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.83.2
+ARG PROTOC_GEN_GO_MCP_REV=6334690a62b684cefdc4d7d459c3a3157205307a
 # renovate: datasource=github-releases depName=protoc-gen-go packageName=protocolbuffers/protobuf-go
 ARG PROTOC_GEN_GO_VERSION=v1.36.12
 ARG PROTOC_GEN_GO_VTPROTO_VERSION=v0.6.0
@@ -144,6 +145,20 @@ RUN xx-go --wrap
 RUN go build -ldflags '-w -s' -o /golang-protobuf-out/protoc-gen-go ./cmd/protoc-gen-go
 RUN install -D /golang-protobuf-out/protoc-gen-go /out/usr/bin/protoc-gen-go
 RUN xx-verify /out/usr/bin/protoc-gen-go
+
+
+FROM --platform=$BUILDPLATFORM go_host AS protoc_gen_go_mcp
+RUN mkdir -p ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
+ARG PROTOC_GEN_GO_MCP_REV
+RUN curl -sSL https://api.github.com/repos/redpanda-data/protoc-gen-go-mcp/tarball/${PROTOC_GEN_GO_MCP_REV} | tar xz --strip 1 -C ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
+WORKDIR ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
+RUN go mod download
+ARG TARGETPLATFORM
+RUN xx-go --wrap
+RUN go build -ldflags '-w -s' -o /protoc-gen-go-mcp-out/protoc-gen-go-mcp ./cmd/protoc-gen-go-mcp
+RUN install -D /protoc-gen-go-mcp-out/protoc-gen-go-mcp /out/usr/bin/protoc-gen-go-mcp
+RUN install -D ./proto/mcp/v1/annotations.proto /out/usr/include/mcp/v1/annotations.proto
+RUN xx-verify /out/usr/bin/protoc-gen-go-mcp
 
 
 FROM --platform=$BUILDPLATFORM go_host AS protoc_gen_go_vtproto
@@ -491,6 +506,7 @@ COPY --from=protoc_gen_bq_schema /out/ /out/
 COPY --from=protoc_gen_doc /out/ /out/
 COPY --from=protoc_gen_go /out/ /out/
 COPY --from=protoc_gen_go_grpc /out/ /out/
+COPY --from=protoc_gen_go_mcp /out/ /out/
 COPY --from=protoc_gen_go_vtproto /out/ /out/
 COPY --from=protoc_gen_gorm /out/ /out/
 COPY --from=protoc_gen_gotemplate /out/ /out/

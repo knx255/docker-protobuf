@@ -45,6 +45,7 @@ PLUGINS=(
   [dart_out]="--dart_out=$OUTDIR test_message.pb.dart"
   [go_out]="--go_out=$OUTDIR test/protobuf/test_message.pb.go"
   [go-grpc_out]="--go-grpc_out=$OUTDIR test/protobuf/test_message_grpc.pb.go"
+  [go-mcp_out]="--go-mcp_out=$OUTDIR test/protobuf/protobufmcp/test_message.pb.mcp.go"
   [go-vtproto_out]="--go-vtproto_out=$OUTDIR test/protobuf/test_message_vtproto.pb.go"
   [gorm_out]="--gorm_out=$OUTDIR test/protobuf/test_message.pb.gorm.go"
   [gotemplate_out]="--gotemplate_out=template_dir=$WORKDIR/templates:$OUTDIR message.go"
@@ -82,7 +83,7 @@ PLUGINS=(
   [validate_out]="--validate_out=lang=go:$OUTDIR test_message.pb.validate.go"
 )
 
-GO_PKG_PLUGINS="go_out go-grpc_out go-vtproto_out gorm_out gotemplate_out gql_out grpc-gateway_out grpc-go_out lint_out openapiv2_out"
+GO_PKG_PLUGINS="go_out go-grpc_out go-mcp_out go-vtproto_out gorm_out gotemplate_out gql_out grpc-gateway_out grpc-go_out lint_out openapiv2_out"
 
 # Run and check each plugin
 for plugin in "${!PLUGINS[@]}"; do

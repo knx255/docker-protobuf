@@ -43,6 +43,18 @@
         "/(^|/|\\.)Dockerfile$/",
         "/(^|/)Dockerfile\\.[^/]*$/"
       ],
+      "matchStrings": ["PROTOC_GEN_GO_MCP_REV=(?<currentDigest>.*?)\\n"],
+      "currentValueTemplate": "main",
+      "depNameTemplate": "protoc-gen-go-mcp",
+      "packageNameTemplate": "https://github.com/redpanda-data/protoc-gen-go-mcp",
+      "datasourceTemplate": "git-refs"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/|\\.)Dockerfile$/",
+        "/(^|/)Dockerfile\\.[^/]*$/"
+      ],
       "matchStrings": ["NODE_IMAGE_VERSION=(?<currentValue>.*?)-alpine\\d+\\.\\d+\\n"],
       "depNameTemplate": "node",
       "datasourceTemplate": "node",
