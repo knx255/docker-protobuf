@@ -158,7 +158,10 @@ WORKDIR ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
 RUN go mod download
 ARG TARGETPLATFORM
 RUN xx-go --wrap
-RUN go build -ldflags '-w -s' -o /protoc-gen-go-mcp-out/protoc-gen-go-mcp ./cmd/protoc-gen-go-mcp
+# Go >= 1.27 enables jsonv2 by default, making json.RawMessage an alias of jsontext.Value.
+# The generator renders tools via printf "%#v", which would then emit `jsontext.Value{...}`
+# without importing it, so generated *.pb.mcp.go files fail to compile. Keep jsonv2 off.
+RUN GOEXPERIMENT=nojsonv2 go build -ldflags '-w -s' -o /protoc-gen-go-mcp-out/protoc-gen-go-mcp ./cmd/protoc-gen-go-mcp
 RUN install -D /protoc-gen-go-mcp-out/protoc-gen-go-mcp /out/usr/bin/protoc-gen-go-mcp
 RUN install -D ./proto/mcp/v1/annotations.proto /out/usr/include/mcp/v1/annotations.proto
 RUN xx-verify /out/usr/bin/protoc-gen-go-mcp
