@@ -1,28 +1,31 @@
 # syntax=docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 
 ARG ALPINE_IMAGE_VERSION=3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+# renovate: datasource=github-releases depName=bazelisk packageName=bazelbuild/bazelisk
+ARG BAZELISK_VERSION=v1.30.0
 # renovate: datasource=github-releases depName=buf packageName=bufbuild/buf
-ARG BUF_VERSION=v1.72.0
+ARG BUF_VERSION=v1.75.0
+ARG DEBIAN_IMAGE_VERSION=13-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
 ARG DART_IMAGE_VERSION=3.13.3@sha256:17b10d5b632200b3d36c460a3acee9600561f90ee5ee171fec9c31723b074a00
 ARG GO_IMAGE_VERSION=1.27.1-alpine3.23@sha256:d9e2f2f07b10cc922da3e80e035c3058810b328d5aef82d2c63680967c5e2ec9
 ARG GOOGLE_API_REV=a0cd3979560fe756f652608469ef23a09b3fdb10
 # renovate: datasource=github-releases depName=grpc-gateway packageName=grpc-ecosystem/grpc-gateway
-ARG GRPC_GATEWAY_VERSION=v2.30.0
+ARG GRPC_GATEWAY_VERSION=v2.34.0
 # renovate: datasource=npm packageName=grpc-tools
 ARG GRPC_NODE_VERSION=1.13.1
 # renovate: datasource=github-tags depName=grpc-rust packageName=stepancheg/grpc-rust
 ARG GRPC_RUST_VERSION=v0.8.3
 # renovate: datasource=github-releases depName=grpc-web packageName=grpc/grpc-web
-ARG GRPC_WEB_VERSION=1.5.0
+ARG GRPC_WEB_VERSION=2.1.1
 ARG NODE_IMAGE_VERSION=24.20.0-alpine3.23@sha256:0388af2af070cd4736a1567cfed02469ba117848845b4165d87a333edb53d2ca
 # renovate: datasource=github-releases depName=protoc-gen-bq-schema packageName=googlecloudplatform/protoc-gen-bq-schema
 ARG PROTOC_GEN_BQ_SCHEMA_VERSION=v3.1.0
 # renovate: datasource=github-tags depName=protoc-gen-dart packageName=google/protobuf.dart
-ARG PROTOC_GEN_DART_VERSION=v25.0.0
+ARG PROTOC_GEN_DART_VERSION=v25.1.0
 # renovate: datasource=github-releases depName=protoc-gen-doc packageName=pseudomuto/protoc-gen-doc
 ARG PROTOC_GEN_DOC_VERSION=v1.5.1
 # renovate: datasource=github-releases depName=protoc-gen-go-grpc packageName=grpc/grpc-go
-ARG PROTOC_GEN_GO_GRPC_VERSION=v1.83.2
+ARG PROTOC_GEN_GO_GRPC_VERSION=v1.85.0
 ARG PROTOC_GEN_GO_MCP_REV=6334690a62b684cefdc4d7d459c3a3157205307a
 # renovate: datasource=github-releases depName=protoc-gen-go packageName=protocolbuffers/protobuf-go
 ARG PROTOC_GEN_GO_VERSION=v1.36.12
@@ -35,21 +38,21 @@ ARG PROTOC_GEN_GOTEMPLATE_VERSION=v1.11.3
 ARG PROTOC_GEN_GOVALIDATORS_VERSION=v0.3.2
 # renovate: datasource=github-releases depName=protoc-gen-gql packageName=danielvladco/go-proto-gql
 ARG PROTOC_GEN_GQL_VERSION=v0.10.0
-ARG PROTOC_GEN_GRPC_SWIFT_2_VERSION=2.4.1
+ARG PROTOC_GEN_GRPC_SWIFT_2_VERSION=2.5.0
 ARG PROTOC_GEN_GRPC_SWIFT_VERSION=1.3.1
 # renovate: datasource=github-releases depName=protoc-gen-lint packageName=ckaznocha/protoc-gen-lint
 ARG PROTOC_GEN_LINT_VERSION=v0.3.0
 # renovate: datasource=pypi packageName=nanopb
-ARG PROTOC_GEN_NANOPB_VERSION=0.4.9.1
+ARG PROTOC_GEN_NANOPB_VERSION=0.4.9.3
 # renovate: datasource=github-releases depName=protoc-gen-openapi packageName=solo-io/protoc-gen-openapi
 ARG PROTOC_GEN_OPENAPI_VERSION=v0.4.0
 ARG PROTOC_GEN_PBANDK_VERSION=0.16.0
 # renovate: datasource=github-tags depName=rust-protobuf packageName=stepancheg/rust-protobuf
 ARG PROTOC_GEN_RUST_VERSION=v3.7.2
 # renovate: datasource=github-releases depName=protoc-gen-scala packageName=scalapb/ScalaPB
-ARG PROTOC_GEN_SCALA_VERSION=v0.11.17
+ARG PROTOC_GEN_SCALA_VERSION=v0.11.21
 # renovate: datasource=github-releases depName=protoc-gen-swift packageName=apple/swift-protobuf
-ARG PROTOC_GEN_SWIFT_VERSION=1.38.1
+ARG PROTOC_GEN_SWIFT_VERSION=1.41.0
 # renovate: datasource=npm packageName=ts-protoc-gen
 ARG PROTOC_GEN_TS_VERSION=0.15.0
 # renovate: datasource=github-releases depName=protoc-gen-validate packageName=bufbuild/protoc-gen-validate
@@ -58,7 +61,7 @@ ARG RUST_IMAGE_VERSION=1.98.0-alpine3.23@sha256:4743b6231029d726d7a0f81d730a7c9f
 ARG SCALA_SBT_IMAGE_VERSION=graalvm-ce-22.3.3-b1-java17_1.9.9_2.12.18@sha256:22b381d98942815ba32fdc55b0de0c1464e7187d049b3acb7c21b221c169c932
 ARG SWIFT_IMAGE_VERSION=6.2.4-noble@sha256:29b983751c605c2d3102d2ab93438c6e0cadf110d9d2aa6e929b6dec9dcb7cbc
 ARG SWIFT_SDK_CHECKSUM=24bdf84495dd31a6de2eb679647c1982b747bfbfe1a2060c779d84dcecd902a4
-ARG UPX_VERSION=5.2.1
+ARG UPX_VERSION=5.3.0
 ARG XX_IMAGE_VERSION=1.9.0@sha256:c64defb9ed5a91eacb37f96ccc3d4cd72521c4bd18d5442905b95e2226b0e707
 
 
@@ -469,15 +472,27 @@ ARG GRPC_WEB_VERSION
 RUN curl -sSL https://api.github.com/repos/grpc/grpc-web/tarball/${GRPC_WEB_VERSION} | tar xz --strip 1 -C /grpc-web
 
 
-FROM alpine:${ALPINE_IMAGE_VERSION} AS grpc_web
-# Use Bazel 7 until grpc-web is updated to support Bazel 8+ with v1.6.0+
-RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
-        bazel7 \
-        build-base \
-        curl
+# Upstream release binaries are glibc-linked, so build a fully static binary that runs on Alpine.
+# Bazelisk picks up the Bazel version pinned in grpc-web's .bazelversion.
+FROM debian:${DEBIAN_IMAGE_VERSION} AS grpc_web
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        g++ \
+        git \
+        python3 \
+        unzip \
+        zip && \
+    rm -rf /var/lib/apt/lists/*
+ARG TARGETARCH BAZELISK_VERSION
+RUN curl -sSLfo /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-linux-${TARGETARCH} && \
+    chmod +x /usr/local/bin/bazel
 COPY --from=grpc_web_src /grpc-web/ /grpc-web/
 WORKDIR /grpc-web
-RUN bazel --batch build //javascript/net/grpc/web/generator:all
+RUN bazel --batch build \
+        --linkopt=-static \
+        //javascript/net/grpc/web/generator:protoc-gen-grpc-web
 RUN install -D /grpc-web/bazel-bin/javascript/net/grpc/web/generator/protoc-gen-grpc-web /out/usr/bin/protoc-gen-grpc-web
 
 
