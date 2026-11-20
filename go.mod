@@ -1,4 +1,4 @@
-module github.com/rvolosatovs/docker-protobuf
+module github.com/knx255/docker-protobuf
 
 go 1.25.0
 

@@ -552,8 +552,8 @@ RUN find /out -name "*.a" -delete -or -name "*.la" -delete
 
 
 FROM node:${NODE_IMAGE_VERSION}
-LABEL org.opencontainers.image.authors="Romāns Volosatovs <rvolosatovs@riseup.net>, Leon White <badfunkstripe@gmail.com>"
-LABEL org.opencontainers.image.source="https://github.com/rvolosatovs/docker-protobuf"
+LABEL org.opencontainers.image.authors="Knox <knx255@gmail.com>, Romāns Volosatovs <rvolosatovs@riseup.net>, Leon White <badfunkstripe@gmail.com>"
+LABEL org.opencontainers.image.source="https://github.com/knx255/docker-protobuf"
 RUN apk add --no-cache \
       --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
       --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community/ \
