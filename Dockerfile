@@ -425,6 +425,10 @@ RUN <<EOF
     mkdir -p /scala-protobuf
     curl -sSL https://api.github.com/repos/scalapb/ScalaPB/tarball/${PROTOC_GEN_SCALA_VERSION} | tar xz --strip 1 -C /scala-protobuf
 EOF
+# graalvm.org no longer serves the GraalVM 22.x component catalog used by `gu install native-image`,
+# so fetch the native-image installable from GitHub releases instead (only amd64 is built).
+ARG GRAALVM_VERSION=22.3.3
+RUN curl -sSLfo /native-image.jar https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/native-image-installable-svm-java17-linux-amd64-${GRAALVM_VERSION}.jar
 
 
 FROM sbtscala/scala-sbt:${SCALA_SBT_IMAGE_VERSION} AS protoc_gen_scala
@@ -433,14 +437,16 @@ ARG NATIVE_IMAGE_INSTALLED=true
 ARG JAVA_OPTS="-Djdk.lang.Process.launchMechanism=vfork"
 # Skip arm64 build due to https://github.com/spring-projects/spring-boot/issues/33429
 COPY --from=protoc_gen_scala_src /scala-protobuf/ /scala-protobuf/
+COPY --from=protoc_gen_scala_src /native-image.jar /native-image.jar
 RUN <<EOF
+    set -e
     mkdir -p /out
     if [ "${TARGETARCH}" = "arm64" ]; then
       echo "Skipping arm64 build due to error in Native Image toolchain"
       exit 0
     fi
     cd /scala-protobuf
-    gu install native-image
+    gu install -L /native-image.jar
     ./make_reflect_config.sh
     sbt protocGenScalaNativeImage/nativeImage
     install -D /scala-protobuf/target/protoc-gen-scala /out/usr/bin/protoc-gen-scala
