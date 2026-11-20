@@ -57,12 +57,12 @@ An all-inclusive `protoc` Docker image.
 
 ## Usage
 ```
-$ docker run --rm -v<some-path>:<some-path> -w<some-path> rvolosatovs/protoc [OPTION] PROTO_FILES
+$ docker run --rm -v<some-path>:<some-path> -w<some-path> knx255/protoc:v1.0.0 [OPTION] PROTO_FILES
 ```
 
 For help try:
 ```
-$ docker run --rm rvolosatovs/protoc --help
+$ docker run --rm knx255/protoc:v1.0.0 --help
 ```
 
 ## Acknowledgements
