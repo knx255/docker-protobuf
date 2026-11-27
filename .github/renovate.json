@@ -46,7 +46,7 @@
       "matchStrings": ["PROTOC_GEN_GO_MCP_REV=(?<currentDigest>.*?)\\n"],
       "currentValueTemplate": "main",
       "depNameTemplate": "protoc-gen-go-mcp",
-      "packageNameTemplate": "https://github.com/redpanda-data/protoc-gen-go-mcp",
+      "packageNameTemplate": "https://github.com/knx255/protoc-gen-go-mcp",
       "datasourceTemplate": "git-refs"
     },
     {

@@ -26,7 +26,8 @@ ARG PROTOC_GEN_DART_VERSION=v25.1.0
 ARG PROTOC_GEN_DOC_VERSION=v1.5.1
 # renovate: datasource=github-releases depName=protoc-gen-go-grpc packageName=grpc/grpc-go
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.85.0
-ARG PROTOC_GEN_GO_MCP_REV=6334690a62b684cefdc4d7d459c3a3157205307a
+# knx255 fork of redpanda-data/protoc-gen-go-mcp: field/enum descriptions + protoc-gen-validate constraints
+ARG PROTOC_GEN_GO_MCP_REV=70a06113c74cdae7628ddf327c4907095654a12b
 # renovate: datasource=github-releases depName=protoc-gen-go packageName=protocolbuffers/protobuf-go
 ARG PROTOC_GEN_GO_VERSION=v1.36.12
 ARG PROTOC_GEN_GO_VTPROTO_VERSION=v0.6.0
@@ -153,7 +154,7 @@ RUN xx-verify /out/usr/bin/protoc-gen-go
 FROM --platform=$BUILDPLATFORM go_host AS protoc_gen_go_mcp
 RUN mkdir -p ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
 ARG PROTOC_GEN_GO_MCP_REV
-RUN curl -sSL https://api.github.com/repos/redpanda-data/protoc-gen-go-mcp/tarball/${PROTOC_GEN_GO_MCP_REV} | tar xz --strip 1 -C ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
+RUN curl -sSL https://api.github.com/repos/knx255/protoc-gen-go-mcp/tarball/${PROTOC_GEN_GO_MCP_REV} | tar xz --strip 1 -C ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
 WORKDIR ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
 RUN go mod download
 ARG TARGETPLATFORM

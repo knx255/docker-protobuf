@@ -30,7 +30,7 @@ An all-inclusive `protoc` Docker image.
 - [protocolbuffers/protobuf-javascript](https://github.com/protocolbuffers/protobuf-javascript)
 - [protocolbuffers/protobuf](https://github.com/protocolbuffers/protobuf)
 - [pseudomuto/protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc)
-- [redpanda-data/protoc-gen-go-mcp](https://github.com/redpanda-data/protoc-gen-go-mcp)
+- [knx255/protoc-gen-go-mcp](https://github.com/knx255/protoc-gen-go-mcp) (fork of [redpanda-data/protoc-gen-go-mcp](https://github.com/redpanda-data/protoc-gen-go-mcp) with field/enum descriptions and protoc-gen-validate constraints)
 - [scalapb/scalapb](https://github.com/scalapb/scalapb) (not on `arm64`, [tracking issue](https://github.com/spring-projects/spring-boot/issues/33429))
 - [solo-io/protoc-gen-openapi](https://github.com/solo-io/protoc-gen-openapi)
 - [stepancheg/grpc-rust](https://github.com/stepancheg/grpc-rust)
