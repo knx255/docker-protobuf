@@ -110,6 +110,10 @@ for plugin in "${!PLUGINS[@]}"; do
   elif [[ "$plugin" == "grpc-gateway_out" ]]; then
     sed -i 's|// IMPORTS|import "google/api/annotations.proto";|' "$proto"
     sed -i 's|// SERVICEOPTIONS|option (google.api.http) = {\n      get: "/v1/test"\n    };|' "$proto"
+  elif [[ "$plugin" == "go-mcp_out" ]]; then
+    # protoc-gen-go-mcp only generates methods with an explicit tool name (require_tool_name=true).
+    sed -i 's|// IMPORTS|import "mcp/v1/annotations.proto";|' "$proto"
+    sed -i 's|// SERVICEOPTIONS|option (mcp.v1.tool_name) = "test_method";|' "$proto"
   elif [[ "$plugin" == "gotemplate_out" ]]; then
     mkdir -p "$WORKDIR/templates"
     printf "%s" "$gotemplate_content" > "$WORKDIR/templates/message.go.tmpl"

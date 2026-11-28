@@ -26,8 +26,9 @@ ARG PROTOC_GEN_DART_VERSION=v25.1.0
 ARG PROTOC_GEN_DOC_VERSION=v1.5.1
 # renovate: datasource=github-releases depName=protoc-gen-go-grpc packageName=grpc/grpc-go
 ARG PROTOC_GEN_GO_GRPC_VERSION=v1.85.0
-# knx255 fork of redpanda-data/protoc-gen-go-mcp: field/enum descriptions + protoc-gen-validate constraints
-ARG PROTOC_GEN_GO_MCP_REV=70a06113c74cdae7628ddf327c4907095654a12b
+# knx255 fork of redpanda-data/protoc-gen-go-mcp: field/enum descriptions, protoc-gen-validate constraints,
+# Go 1.27 (jsonv2-safe codegen) and require_tool_name (default true: only methods with (mcp.v1.tool_name)).
+ARG PROTOC_GEN_GO_MCP_REV=958ce9d1c2ebfd3a014916be0dc4eac11dd05e26
 # renovate: datasource=github-releases depName=protoc-gen-go packageName=protocolbuffers/protobuf-go
 ARG PROTOC_GEN_GO_VERSION=v1.36.12
 ARG PROTOC_GEN_GO_VTPROTO_VERSION=v0.6.0
@@ -159,10 +160,7 @@ WORKDIR ${GOPATH}/src/github.com/redpanda-data/protoc-gen-go-mcp
 RUN go mod download
 ARG TARGETPLATFORM
 RUN xx-go --wrap
-# Go >= 1.27 enables jsonv2 by default, making json.RawMessage an alias of jsontext.Value.
-# The generator renders tools via printf "%#v", which would then emit `jsontext.Value{...}`
-# without importing it, so generated *.pb.mcp.go files fail to compile. Keep jsonv2 off.
-RUN GOEXPERIMENT=nojsonv2 go build -ldflags '-w -s' -o /protoc-gen-go-mcp-out/protoc-gen-go-mcp ./cmd/protoc-gen-go-mcp
+RUN go build -ldflags '-w -s' -o /protoc-gen-go-mcp-out/protoc-gen-go-mcp ./cmd/protoc-gen-go-mcp
 RUN install -D /protoc-gen-go-mcp-out/protoc-gen-go-mcp /out/usr/bin/protoc-gen-go-mcp
 RUN install -D ./proto/mcp/v1/annotations.proto /out/usr/include/mcp/v1/annotations.proto
 RUN xx-verify /out/usr/bin/protoc-gen-go-mcp
